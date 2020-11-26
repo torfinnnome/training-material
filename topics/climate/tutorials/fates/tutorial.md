@@ -43,7 +43,7 @@ contributors:
 {:.no_toc}
 
 
-The practical aims at familiarizing you with running CLM-FATES in Galaxy and analyzing the model results. 
+The practical aims at familiarizing you with running CLM-FATES in Galaxy and analyzing the model results.
 It will also teach you on how to create Galaxy workflow for your CLM-FATES simulations to make your research fully reproducible.
 
 > ### Agenda
@@ -61,14 +61,14 @@ It will also teach you on how to create Galaxy workflow for your CLM-FATES simul
 > FATES needs what we call a "Host Land Model" (HLM) to run and in this tutorial
 > we will be using the [Community Land Model](http://www.cesm.ucar.edu/models/clm/)
 > of the [Community Terrestrial Systems Model](https://github.com/ESCOMP/CTSM) (CLM-CTSM).
-> FATES was derived from the CLM Ecosystem Demography model (CLM(ED)), which was documented in 
+> FATES was derived from the CLM Ecosystem Demography model (CLM(ED)), which was documented in
 > {% cite Fisher2015 %}.
 > And this technical note was first published as an appendix to [that paper](https://pdfs.semanticscholar.org/396c/b9f172cb681421ed78325a2237bfb428eece.pdf).
 > The [FATES documentation](https://fates-docs.readthedocs.io/en/latest/index.html) will provide some more insight on FATES too.
 >
 {:  .comment}
 
-## Step 1: Get CLM-FATES input data
+# Get CLM-FATES input data
 
 Preparing CLM-FATES input data is out of scope for this tutorial. We assume the input data tarball contains the following folders:
 
@@ -102,7 +102,7 @@ For the purpose of this tutorial, input data for a single point location ALP1 (6
 >
 >    As `https://zenodo.org/record/4108341/files/inputdata_version2.0.0_ALP1.tar` and `https://zenodo.org/record/4126404/files/CTSM_FATES-EMERALD_version2.0.0_ALP1_restart_2300-01-01.tar`
 >    are not beautiful names and can give errors for some tools,
->    it is a good practice to change the dataset names by something more meaningful. For example by removing 
+>    it is a good practice to change the dataset names by something more meaningful. For example by removing
 >    `https://zenodo.org/record/4108341/files/` and `https://zenodo.org/record/4126404/files/` to obtain `inputdata_version2.0.0_ALP1.tar`
 >    and `CTSM_FATES-EMERALD_version2.0.0_ALP1_restart_2300-01-01.tar`, respectively.
 >
@@ -114,7 +114,7 @@ For the purpose of this tutorial, input data for a single point location ALP1 (6
 >
 {: .hands_on}
 
-# Step 2: Setting up a CLM-FATES simulation
+# Setting up a CLM-FATES simulation
 
 We will be using the CTSM/FATES-EMERALD Galaxy tool.
 
@@ -159,7 +159,7 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >
 > 2. Check that the datatype of your outputs (history file) is **netcdf**
 >
->    All the history files contain gridded data values written at specified times during the model run. 
+>    All the history files contain gridded data values written at specified times during the model run.
 >    Depending on the length of your simulation, you may have one or more history files that you can recognize from their names:
 >    `ALP1_exp.clm2.h0.yyyy-mm-dd-sssss.nc` (for non-monthly history files).
 >    Datatypes are, by default, automatically guessed. Here, as the prefix is `.nc`, the format is not always recognized as `netcdf` files.
@@ -182,7 +182,7 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >    - Click **Execute**
 >
 >    Inspect the generated output files and identify which variables would provide you some insights about canopy transpiration.
-> 
+>
 >    > ### {% icon question %} Questions
 >    >
 >    > 1. What are the short names of the relevant variables? Which one will you pick if you want a result in **mm/s**?
@@ -196,7 +196,7 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >
 {: .hands_on}
 
-# Step 3: Quick visualization with Panoply
+# Quick visualization with Panoply
 
 ## Opening up Panoply
 
@@ -226,12 +226,12 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 > ### {% icon hands_on %} Hands-on: Inspect dataset
 >
 > 1. Inspect dataset content
-> 
->    Here you can look at the dataset (`ALP1_exp.nc`) and related variables (FSDS, FSA, AREA_TREE, BIOMASS_CANOPY, etc.) 
+>
+>    Here you can look at the dataset (`ALP1_exp.nc`) and related variables (FSDS, FSA, AREA_TREE, BIOMASS_CANOPY, etc.)
 >
 >    > ### {% icon question %} Question
 >    >
->    > 1. What is the long name of **MORTALITY**? 
+>    > 1. What is the long name of **MORTALITY**?
 >    > 2. What is its physical unit?
 >    >
 >    > > ### {% icon solution %} Solution
@@ -254,7 +254,7 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >    > {: .solution}
 >    {: .question}
 >
-> 
+>
 > 3. Plot the rate of total mortality per PFT (MORTALITY)
 >
 >    Select a 2D plot with time as x-axis and colored by the rate of total mortality per PFT.
@@ -274,7 +274,7 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >    {: .comment}
 {: .hands_on}
 
-# Step 4: Using Galaxy tools for analysing your CLM-FATES simulation
+# Using Galaxy tools for analysing your CLM-FATES simulation
 
 Panoply is a great tool for exploring the results of your simulations but what we would like is to automate the generation of the plots
 so that we can reuse it for any simulations.
@@ -328,7 +328,7 @@ so that we can reuse it for any simulations.
 >
 {: .hands_on}
 
-# Step 5: Convert your analysis history into a Galaxy workflow
+# Convert your analysis history into a Galaxy workflow
 
 > ### {% icon hands_on %} Hands-on: Extract workflow
 >
@@ -346,7 +346,7 @@ so that we can reuse it for any simulations.
 >
 {: .hands_on}
 
-# Step 6: Change your CLM-FATES case and rerun your workflow
+# Change your CLM-FATES case and rerun your workflow
 
 We would like to run a CLM-FATES case where the atmospheric Carbon Dioxyde Concentration (CO2) is increased by a factor of 4.
 
@@ -401,7 +401,7 @@ To share a history, click on the {% icon galaxy-gear %} icon in the history pane
 
 > ### {% icon comment %} Publish your history to https://workflowhub.eu/
 > One step further is to share your workflow on [https://workflowhub.eu](https://workflowhub.eu) where it
-> will be stored in a Galaxy workflow format as well as in [Common Workflow Language](https://www.commonwl.org/). 
+> will be stored in a Galaxy workflow format as well as in [Common Workflow Language](https://www.commonwl.org/).
 > It provides standardised workflow identifiers and descriptions needed for workflow discovery, reuse, preservation, interoperability and monitoring and metadata harvesting using standard protocols.
 > Please note that [https://workflowhub.eu](https://workflowhub.eu) is still under active development.
 {:  .comment}
