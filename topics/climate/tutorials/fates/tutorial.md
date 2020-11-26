@@ -343,13 +343,19 @@ We would like to run a CLM-FATES case where the atmospheric Carbon Dioxyde Conce
 
 > ### {% icon hands_on %} Hands-on: Compare the two simulations
 >
->    Using the results from your two CLM-FATES simulations and the generated plots, assess the impact
->    of an increase in the atmosperhic CO2 on the outputs of the model.
->    1. Edit your workflow and customize it to run your new CO2 experiment. For this you would need to
->       add an extra step to extract the first history file from the history collection and generate the
->       corresponding plot. The final workflow would be similar to the one shown below:
+>  Using the results from your two CLM-FATES simulations and the generated plots, assess the impact
+>  of an increase in the atmosperhic CO2 on the outputs of the model.
 >
->  ![FATES workflow](../../images/fates_workflow.png "FATES workflow")
+> 1. Open the **workflow editor**
+>
+>    {% include snippets/edit_workflow.md %}
+>
+> 2. Edit your workflow and customize it to run your new CO2 experiment. For this you would need to:
+>      - Add an extra step to extract the first history file from the history collection
+>      - Generate the corresponding plot.
+>    The final workflow would be similar to the one shown below:
+>
+>    ![FATES workflow](../../images/fates_workflow.png "FATES workflow")
 >
 >    > ### {% icon question %} Question
 >    > 1. Is the model response to this significant increase of atmospheric CO2 what you expected?
