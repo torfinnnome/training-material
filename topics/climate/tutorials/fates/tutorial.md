@@ -98,17 +98,16 @@ For the purpose of this tutorial, input data for a single point location ALP1 (6
 >
 >    {% include snippets/change_datatype.md datatype="datatypes" %}
 >
-> 4. Rename datasets as
->
->    As `https://zenodo.org/record/4108341/files/inputdata_version2.0.0_ALP1.tar` and `https://zenodo.org/record/4126404/files/CTSM_FATES-EMERALD_version2.0.0_ALP1_restart_2300-01-01.tar`
->    are not beautiful names and can give errors for some tools,
->    it is a good practice to change the dataset names by something more meaningful. For example by removing
->    `https://zenodo.org/record/4108341/files/` and `https://zenodo.org/record/4126404/files/` to obtain `inputdata_version2.0.0_ALP1.tar`
->    and `CTSM_FATES-EMERALD_version2.0.0_ALP1_restart_2300-01-01.tar`, respectively.
+> 4. Rename {% icon galaxy-pencil %} datasets
+>      - Dataset names are the full URL, but this is not very nice to work with, and can even give errors for some tools
+>      - It is good practice to change the dataset names to something more meaningful
+>        -  E.g. by stripping off the beginning of the URL
+>      - Example: rename `https://zenodo.org/record/4108341/files/inputdata_version2.0.0_ALP1.tar` to `inputdata_version2.0.0_ALP1.tar`
+>      - Do the same for the other dataset
 >
 >    {% include snippets/rename_dataset.md %}
 >
-> 5. Add a tag to the dataset corresponding to `fates`
+> 5. Add a tag to the dataset corresponding to `#fates`
 >
 >    {% include snippets/add_tag.md %}
 >
@@ -129,24 +128,18 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 > ### {% icon hands_on %} Hands-on: Creating a new CTSM/FATES-EMERALD case
 >
 > 1. {% tool [CTSM/FATES-EMERALD](ctsm_fates) %} with the following parameters:
->    - {% icon param-file %} *"inputdata for running FATES EMERALD"*: select the **inputdata_version2.0.0_ALP1.tar** file from your history
->    - *Name of your case*: ALP1_exp
->    - Expand *'Customize the model run period'* to change the default values:
->        - **Determines the model run initialization type**: select **hybrid**
->        - **Reference case for hybrid or branch runs**: ALP1_refcase
->        - **Reference date for hybrid or branch runs (yyyy-mm-dd)**: 2300-01-01
->        - **Run start date (yyyy-mm-dd). Only used for startup or hybrid runs**: 0001-01-01
->        - **Restart for running FATES EMERALD**: CTSM_FATES-EMERALD_version2.0.0_ALP1_restart_2300-01-01.tar
->        - **Provides a numerical count for STOP_OPTION**: 5
->        - **Sets the run length along with STOP_N and STOP_DATE**: nyears
->    - Click **Execute**
+>    - {% icon param-file %} *"inputdata for running FATES EMERALD"*: `inputdata_version2.0.0_ALP1.tar` file from your history
+>    - *"Name of your case"*: ALP1_exp
+>    - In section *"Customize the model run period"*:
+>        - {% icon param-select %} *"Determines the model run initialization type:*: `hybrid`
+>          - *"Reference case for hybrid or branch runs"*: `ALP1_refcase`
+>          - *"Reference date for hybrid or branch runs (yyyy-mm-dd)"*: `2300-01-01`
+>          - *"Run start date (yyyy-mm-dd). Only used for startup or hybrid runs"*: `0001-01-01`
+>          - {% icon param-file %} *"Restart for running FATES EMERALD"*: `CTSM_FATES-EMERALD_version2.0.0_ALP1_restart_2300-01-01.tar`
+>        - *"Provides a numerical count for STOP_OPTION"*: `5`
+>        - *"Sets the run length along with STOP_N and STOP_DATE"*: `nyears`
 >
->    > ### {% icon comment %} Tip: search for the tool
->    >
->    > Use the **tools search box** at the top of the tool panel to find **Remove beginning** {% icon tool %}.
->    {: .tip}
->
->    > ## {% icon comment %} startup versus hybrid
+>    > ### {% icon comment %} Startup versus Hybrid
 >    >
 >    >  When using **startup**, the FATES model will start from some arbitrary baseline state that is not linked to any previous run.
 >    > Startup runs are typically initialized using a start date of 0001-01-01 except if you change it (start date option).
@@ -157,13 +150,17 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >    >
 >    {: .comment}
 >
-> 2. Check that the datatype of your outputs (history file) is **netcdf**
+> 2. Check that the datatype {% icon galaxy-pencil %} of your outputs (history file) is **netcdf**
+>      - If this is not the case, please change the datatype now
 >
->    All the history files contain gridded data values written at specified times during the model run.
->    Depending on the length of your simulation, you may have one or more history files that you can recognize from their names:
->    `ALP1_exp.clm2.h0.yyyy-mm-dd-sssss.nc` (for non-monthly history files).
->    Datatypes are, by default, automatically guessed. Here, as the prefix is `.nc`, the format is not always recognized as `netcdf` files.
->    To cope with that, one can change the datatype manually, as shown below.
+>    > ### {% icon comment %} About datatypes
+>    >
+>    > All the history files contain gridded data values written at specified times during the model run.
+>    > Depending on the length of your simulation, you may have one or more history files that you can recognize from their names:
+>    >`ALP1_exp.clm2.h0.yyyy-mm-dd-sssss.nc` (for non-monthly history files).
+>    > Datatypes are, by default, automatically guessed. Here, as the prefix is `.nc`, the format is not always recognized as `netcdf` files.
+>    > To cope with that, one can change the datatype manually, as shown below.
+>    {: .comment}
 >
 >    {% include snippets/change_datatype.md datatype="datatypes" %}
 >
@@ -175,13 +172,11 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >
 >    {% include snippets/rename_dataset.md %}
 >
-> 4. Getting metadata information for CLM-FATES netCDF outputs
+> 4. {% tool [NetCDF xarray Metadata Info](NetCDF+xarray+Metadata+Info) %}  to get metadata information for CLM-FATES netCDF outputs:
+>      - {% icon param-file %} *"Netcdf file"*: `ALP1_exp.nc`
 >
->    {% tool [NetCDF xarray Metadata Info](NetCDF+xarray+Metadata+Info) %}  with the following parameters:
->    - **Netcdf file**: ALP1_exp.nc
->    - Click **Execute**
->
->    Inspect the generated output files and identify which variables would provide you some insights about canopy transpiration.
+> 5. **Inspect** {% icon galaxy-eye %} the generated output files
+>      - Identify which variables would provide you some insights about canopy transpiration.
 >
 >    > ### {% icon question %} Questions
 >    >
@@ -268,7 +263,7 @@ We will be using the CTSM/FATES-EMERALD Galaxy tool.
 >    > {: .solution}
 >    {: .question}
 >
->    > ## {% icon comment %} Quit Panoply properly to save your plots!
+>    > ### {% icon comment %} Quit Panoply properly to save your plots!
 >    >
 >    > To make sure all your plots stored in **outputs** folder  get exported to Galaxy, you need to quit panoply: **File** --> **Quit Panoply**.
 >    {: .comment}
@@ -281,48 +276,44 @@ so that we can reuse it for any simulations.
 
 > ### {% icon hands_on %} Hands-on: Select and plot **LEAFC**
 >
-> 1. Select the total carbon in live plant leaves (**LEAFC**)
->    {% tool [NetCDF xarray Selection](NetCDF+xarray+Selection) %} with the following parameters:
->    - **Input netcdf file**: ALP1_exp.nc
->    - **Tabular of variables**: Metadata infos from ALP1_exp.nc
->    - **Choose the variable to extract**: LEAFC
->    - Click **Execute**
+> 1. {% tool [NetCDF xarray Selection](NetCDF+xarray+Selection) %} to select the total carbon in live plant leaves (**LEAFC**)
+>      - {% icon param-file %} *"Input netcdf file"*: ALP1_exp.nc
+>      - {% icon param-file %} *"Tabular of variables"*: Metadata info from `ALP1_exp.nc` (output of **NetCDF xarray Metadata Info** {% icon tool %})
+>      - {% icon param-select %} *"Choose the variable to extract"*: `LEAFC`
 >
-> 2. Rename Dataset to **NetCDF xarray Selection on ALP1_exp.nc**
+> 2. **Rename** {% icon galaxy-pencil %} dataset to `NetCDF xarray Selection on ALP1_exp.nc`
 >
 >    {% include snippets/rename_dataset.md %}
 >
-> 3. Clean date column for plotting
->    {% tool [Replace parts of text ](Replace+parts+of+text) %} with the following parameters:
->    - **File to process**: NetCDF xarray Selection on ALP1_exp.nc
->    - **Find pattern**:  00:00:00
->    - **Find-Pattern is a regular expression**: Select *No*
->    - **Replace all occurences of the pattern**: Select *Yes*
->    - **Case-Insensitive search**: Select *No*
->    - **Find whole-words**: Select *Yes*
->    - **Ignore first line**: Select *Yes*
->    - **Find and Replace text in**: Select *entire line*
->    - Click **Execute**
+> 3. {% tool [Replace parts of text ](Replace+parts+of+text) %} to clean date column for plotting:
+>      - {% icon param-file %} *"File to process"*: NetCDF xarray Selection on ALP1_exp.nc
+>      - {% icon param-text %} *"Find pattern"*: `00:00:00`
+>      - *"Find-Pattern is a regular expression"*: `No`
+>      - *"Replace all occurences of the pattern"*: `Yes`
+>      - *"Case-Insensitive search"*: `No`
+>      - *"Find whole-words"*: `Yes`
+>      - *"Ignore first line"*: `Yes`
+>      - {% icon param-select %} *"Find and Replace text in"*: `entire line`
 >
-> 4. Rename Dataset to **LEAFC_clean.tabular**
+> 4. **Rename** {% icon galaxy-pencil %} dataset to `LEAFC_clean.tabular`
 >
 >    {% include snippets/rename_dataset.md %}
 >
-> 5. Plot the total carbon in live plant leaves (**LEAFC**)
+> 5. **Scatterplot w ggplot2**  {% icon tool %} to plot the total carbon in live plant leaves (**LEAFC**):
+>      - {% icon param-file %} *"Input in tabular format"*: `LEAFC_clean.tabular`
+>      - *"Column to plot on x-axis"*: 1
+>      - *"Column to plot on y-axis"*: 4
+>      - *"Plot title"*: `Total carbon in live plant leaves`
+>      - *"Label for x axis"*: `Time`
+>      - *"Label for y axis"*: `LEAFC (kgC ha-1)`
+>      - In `Advanced Options`
+>          - {% icon param-select %} *"Type of plot"*: `Points and Lines`
+>      - In `Output options`
+>          - *"width of output"*:`19.0`
+>          - *"height of output"*: `5.0`
 >
-> To make a plot, you can use **Scatterplot w ggplot2**  {% icon tool %} with the following parameters:
->    - *"Input in tabular format"*: `LEAFC_clean.tabular`
->    - *"Column to plot on x-axis"*: 1
->    - *"Column to plot on y-axis"*: 4
->    - *"Plot title"*: Total carbon in live plant leaves
->    - *"Label for x axis"*: Time
->    - *"Label for y axis"*: LEAFC (kgC ha-1)
->    - In `Advanced Options` change `Type of plot` to **Points and Lines**.
->    - And finally in `Output options` set `width of output` to **19.0 and `height of output`* to 5.0*.
 >
-> 6. Click on **Execute**.
->
-> 7. **View** {% icon galaxy-eye%} the resulting plot:
+> 6. **View** {% icon galaxy-eye%} the resulting plot:
 >
 >    ![LEAFC](../../images/LEAFC_ALP1_exp_ggplot.png)
 >
